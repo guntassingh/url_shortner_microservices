@@ -23,7 +23,7 @@ docker network create springapp
 Browse to Viafora folder open in terminal.
 **************Run the command**************
 export IP=(`hostname -I | awk '{print $1}'`)
-IP=$IP docker-compose -f docker-compose.yml up
+IP=$IP docker-compose -f docker-compose.yml up -d
 
 
 
