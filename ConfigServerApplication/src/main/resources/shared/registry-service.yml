@@ -1,0 +1,9 @@
+server:
+  port: 8761 #the default port used for eureka servers
+  
+logging:
+  level:
+    org.springframework: ERROR
+    com.rsystems: DEBUG
+  file: /data/eureka.log
+  
