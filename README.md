@@ -13,7 +13,7 @@ java "1.8.0_222"
 maven 
  
 ## Step
-##############Download the Project, Build the code base##############
+##############Download the Project, Build the code base using maven##############
 
 Go to ConfigServerApplication folder and Run command mvn clean install -DskipTests
 Go to EurekaServer folder and Run command mvn clean install -DskipTests
