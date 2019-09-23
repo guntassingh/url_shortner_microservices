@@ -105,7 +105,7 @@ public class TestUrlServiceImpl {
 		Mockito.when(urlService.dtoToEntity(createLinkDTO)).thenReturn(existingUrl);
 		Mockito.when(repository.save(existingUrl)).thenReturn(existingUrl);
 		LinkDTO linkDTO = urlService.createShortURL(createLinkDTO);
-		assertEquals(linkDTO.getShortURL(), "NDRmNz");
+		assertEquals("NDRmNz",linkDTO.getShortURL());
 
 	}
 

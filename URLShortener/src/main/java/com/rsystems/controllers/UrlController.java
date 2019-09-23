@@ -23,7 +23,6 @@ import com.rsystems.dtos.CreateLinkDTO;
 import com.rsystems.dtos.LinkDTO;
 import com.rsystems.entities.Statistic;
 import com.rsystems.entities.Url;
-import com.rsystems.exceptions.UrlNotFoundException;
 import com.rsystems.services.StatisticService;
 import com.rsystems.services.ThirdPartyService;
 import com.rsystems.services.UrlService;
