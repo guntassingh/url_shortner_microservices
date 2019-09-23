@@ -25,6 +25,20 @@ Browse to Viafora folder open in terminal.
 export IP=(`hostname -I | awk '{print $1}'`)
 IP=$IP docker-compose -f docker-compose.yml up -d
 
+## Testing instructions
+
+Replace the following code in bootstrap.yml in the resources folder of UrlShoretner 
+
+cloud:
+    config:
+      uri: http://eureka:8888
+      
+with 
+
+cloud:
+    config:
+      uri: http://localhost:8888
+
 
 
 ## Usage
