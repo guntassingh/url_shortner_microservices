@@ -29,20 +29,6 @@ public interface UrlService {
 	 */
 	public LinkDTO createShortURL(CreateLinkDTO urlDto);
 
-	/**
-	 * Fetch fromDTO
-	 * 
-	 * @param customerId, url of CreateLinkDTO
-	 * @return Url
-	 */
 
-	public Url fromDTO(CreateLinkDTO urlDto);
 
-	/**
-	 * Fetch toLinkDTO
-	 * 
-	 * @param code, longUrl,customerId,createdAt and updatedAt of Url
-	 * @return LinkDTO
-	 */
-	public LinkDTO toLinkDTO(Url url);
 }

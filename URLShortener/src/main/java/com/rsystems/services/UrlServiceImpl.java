@@ -38,6 +38,7 @@ public class UrlServiceImpl implements UrlService {
 		return null;
 	}
 
+
 	@Override
 	public Url getCodeDetails(String urlCode) {
 		Url url= find(urlCode);
@@ -46,14 +47,10 @@ public class UrlServiceImpl implements UrlService {
 		}
 		 return url;
 	}
-	/**
-	 * 
-	 * @param urlDto
-	 * @return
-	 */
+
 	@Override
 	public LinkDTO createShortURL(CreateLinkDTO urlDto) {
-		Url url = fromDTO(urlDto);
+		Url url = dtoToEntity(urlDto);
 		String longUrl = url.getLongUrl();
 		logger.info(Constants.FINDING_OR_CREATING_URL, longUrl);
 		int startIndex = 0;
@@ -68,12 +65,12 @@ public class UrlServiceImpl implements UrlService {
 		url.setCode(code);
 		url = repository.save(url);
 
-		return toLinkDTO(url);
+		return entityToDTO(url);
 
 	}
 
-	@Override
-	public Url fromDTO(CreateLinkDTO urlDto) {
+
+	public Url dtoToEntity(CreateLinkDTO urlDto) {
 		Url url = new Url();
 		url.setLongUrl(urlDto.getUrl());
 		url.setCustomerId(urlDto.getCustomerId());
@@ -81,8 +78,8 @@ public class UrlServiceImpl implements UrlService {
 
 	}
 
-	@Override
-	public LinkDTO toLinkDTO(Url url) {
+	
+	public LinkDTO entityToDTO(Url url) {
 		LinkDTO linkDTO = new LinkDTO();
 		linkDTO.setDateCreated(url.getCreatedAt().getTime());
 		linkDTO.setShortURL(url.getCode());

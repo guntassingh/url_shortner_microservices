@@ -4,13 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -23,19 +19,16 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.google.common.net.HttpHeaders;
 import com.rsystems.dtos.CreateLinkDTO;
 import com.rsystems.dtos.LinkDTO;
 import com.rsystems.entities.Statistic;
 import com.rsystems.entities.Url;
-import com.rsystems.exceptions.UrlNotFoundException;
 import com.rsystems.services.StatisticService;
 import com.rsystems.services.ThirdPartyService;
 import com.rsystems.services.UrlService;
-import com.rsystems.services.UrlServiceImpl;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = UrlController.class, secure = false)
+@WebMvcTest(value = UrlController.class)
 public class TestUrlController {
 
 	@Autowired
@@ -58,28 +51,18 @@ public class TestUrlController {
 	public void findAndRedirect() throws Exception {
 		Mockito.when(urlService.getCodeDetails("MmM3MT")).thenReturn(url);
 		Mockito.when(statisticService.mapFrom(new HashMap<String, String>(), url)).thenReturn(Statistic);
-		System.out.println("Long url " + url.getLongUrl());
-
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/MmM3MT").accept(MediaType.APPLICATION_JSON);
-
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-
-		System.out.println(result.getResponse());
-
 		assertEquals(HttpStatus.MOVED_PERMANENTLY.value(), result.getResponse().getStatus());
 
 	}
 
-	
-
-	
 	@Test
 	public void createShortURL() throws Exception {
 		CreateLinkDTO urlDto = new CreateLinkDTO();
 		urlDto.setCustomerId("validUser");
 		urlDto.setUrl("http://yahoo.com");
 		LinkDTO linkDTO = new LinkDTO();
-
 		Mockito.when(urlService.createShortURL(urlDto)).thenReturn(linkDTO);
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/s/url").accept(MediaType.APPLICATION_JSON)
 				.content(urlJson).header("token", "").contentType(MediaType.APPLICATION_JSON);
