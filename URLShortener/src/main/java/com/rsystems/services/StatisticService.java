@@ -18,7 +18,7 @@ public interface StatisticService {
      * @param browser, deviceType, operatingSystem and createdAt for which Statistic detail are fetched
      * @return Statistic
      */
-	public Statistic mapFrom(Map<String, String> headers, Url url);
+	public Statistic extractStatsFromRequest(Map<String, String> headers, Url url);
 	 /**
      * Fetch StatisticsSummaryDTO Detail 
      * @param numberOfHits,browsers,devicesTypes and operatingSystems

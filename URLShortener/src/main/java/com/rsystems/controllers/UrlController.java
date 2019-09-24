@@ -68,7 +68,7 @@ public class UrlController {
 		Url url = urlService.getCodeDetails(code);
 		
 
-		Statistic statistic = statisticService.mapFrom(headersMap, url);
+		Statistic statistic = statisticService.extractStatsFromRequest(headersMap, url);
 		statisticService.create(statistic);
 
 		HttpHeaders headers = new HttpHeaders();

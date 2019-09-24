@@ -32,12 +32,23 @@ export IP=(`hostname -I | awk '{print $1}'`)
 IP=$IP docker-compose -f docker-compose.yml up -d
 
 ## Testing instructions
+**************Test using Post Man**************
+ Since we are using self signed certificate, switch off SSL verification check in postman 
+ Go to postman Settings->General and switch off SSL certifictaion verification check
+ 
+ refer poc doc to get more details 
+ 
+ **GET request(s) can be tested by browser also.
+ 
+## To run Junit Test Cases on local
 
-Replace the following code in bootstrap.yml in the resources folder of UrlShoretner 
+**Run ConfigServerApplication
+
+**Replace the following code in bootstrap.yml in the resources folder of UrlShoretner 
 
 cloud:
     config:
-      uri: http://eureka:8888
+      uri: http://config:8888
       
 with 
 

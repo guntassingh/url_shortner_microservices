@@ -47,7 +47,7 @@ public class TestStatisticServiceImpl {
 		Map<String, String> headers = new HashMap<>();
 		headers.put(HttpHeaders.USER_AGENT.toLowerCase(),
 				"Mozilla/5.0 (Windows NT 5.1; rv:7.0.1) Gecko/20100101 Firefox/7.0.1");
-		Statistic statistic = statisticService.mapFrom(headers, url);
+		Statistic statistic = statisticService.extractStatsFromRequest(headers, url);
 		assertEquals("Firefox 7", statistic.getBrowser());
 		assertEquals("Computer", statistic.getDeviceType());
 		assertEquals("Windows XP", statistic.getOperatingSystem());

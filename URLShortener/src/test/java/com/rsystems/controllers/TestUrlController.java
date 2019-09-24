@@ -50,7 +50,7 @@ public class TestUrlController {
 	@Test
 	public void findAndRedirect() throws Exception {
 		Mockito.when(urlService.getCodeDetails("MmM3MT")).thenReturn(url);
-		Mockito.when(statisticService.mapFrom(new HashMap<String, String>(), url)).thenReturn(Statistic);
+		Mockito.when(statisticService.extractStatsFromRequest(new HashMap<String, String>(), url)).thenReturn(Statistic);
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/MmM3MT").accept(MediaType.APPLICATION_JSON);
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		assertEquals(HttpStatus.MOVED_PERMANENTLY.value(), result.getResponse().getStatus());

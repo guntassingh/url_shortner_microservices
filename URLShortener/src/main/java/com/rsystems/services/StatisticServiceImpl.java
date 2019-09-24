@@ -33,7 +33,7 @@ public class StatisticServiceImpl implements StatisticService {
 	}
 
 	@Override
-	public Statistic mapFrom(Map<String, String> headers, Url url) {
+	public Statistic extractStatsFromRequest(Map<String, String> headers, Url url) {
 
 		String userAgentString = headers.get(HttpHeaders.USER_AGENT.toLowerCase());
 
