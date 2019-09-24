@@ -2,10 +2,8 @@ package com.rsystems.services;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-
 import java.util.Date;
 import java.util.Optional;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -13,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
-
 import com.rsystems.dtos.CreateLinkDTO;
 import com.rsystems.dtos.LinkDTO;
 import com.rsystems.entities.Url;
@@ -37,21 +34,10 @@ public class TestUrlServiceImpl {
 
 	Url url = new Url("MmM3MT", "http://docker.com", "12345");
 	Optional<Url> url1;
-	String id = "MDVmNm";
 	Optional<Url> returnCacheValue = Optional.of((Url) url);
 
 	@Test
-	public void getURLbycode() {
-
-		Mockito.<Optional<Url>>when(repository.findById(id)).thenReturn(returnCacheValue);
-		urlService.find("MmM3MT");
-		assertEquals(returnCacheValue.get().getCustomerId(), url.getCustomerId());
-		assertEquals(returnCacheValue.get().getCode(), url.getCode());
-
-	}
-
-	@Test
-	public void whenCodeExistsReturnsUrlFromCodeDetails() {
+	public void whenCodeExistReturnUrlFromCodeDetails() {
 
 		String existingCode = "3077yW";
 		Url existingUrl = new Url(existingCode, "http://www.docker.com", "12345");
@@ -62,18 +48,17 @@ public class TestUrlServiceImpl {
 	}
 
 	@Test(expected = UrlNotFoundException.class)
-	public void whenCodenotExistsReturnsNotFoundException() {
+	public void whenCodeNotExistReturnNotFoundException() {
 
 		String existingCode = "3077yW";
 		Url existingUrl = new Url(existingCode, "http://www.docker.com", "12345");
 		Optional<Url> optional = Optional.of(existingUrl);
 		Mockito.when(repository.findById(existingCode)).thenReturn(optional);
 		urlService.getCodeDetails("3077yW1");
-
 	}
 
 	@Test
-	public void whenCodeExistsReturnsUrl() {
+	public void whenCodeExistReturnsUrl() {
 		String existingCode = "3077yW";
 		Url existingUrl = new Url(existingCode, "http://www.docker.com", "12345");
 		Optional<Url> optional = Optional.of(existingUrl);
@@ -83,7 +68,7 @@ public class TestUrlServiceImpl {
 	}
 
 	@Test
-	public void whenCodenotExistReturnNull() {
+	public void whenCodeNotExistReturnNull() {
 
 		String existingCode = "3077yW1";
 		Optional<Url> optional = Optional.empty();
@@ -94,8 +79,10 @@ public class TestUrlServiceImpl {
 
 	@Test
 	public void whenLongUrlDoesNotExistSaveItAndReturnNewUrlCode() {
+
 		String existingCode = "MmM3MT";
 		Url existingUrl = new Url("MmM3MT", "http://www.docker.com", "12345");
+		LinkDTO linkdto = new LinkDTO();
 		CreateLinkDTO createLinkDTO = new CreateLinkDTO();
 		createLinkDTO.setCustomerId("12345");
 		createLinkDTO.setUrl("http://www.docker.com");
@@ -104,8 +91,9 @@ public class TestUrlServiceImpl {
 		Mockito.when(repository.findById(existingCode)).thenReturn(optional);
 		Mockito.when(urlService.dtoToEntity(createLinkDTO)).thenReturn(existingUrl);
 		Mockito.when(repository.save(existingUrl)).thenReturn(existingUrl);
+		Mockito.when(urlService.entityToDTO(existingUrl)).thenReturn(linkdto);
 		LinkDTO linkDTO = urlService.createShortURL(createLinkDTO);
-		assertEquals("NDRmNz",linkDTO.getShortURL());
+		assertEquals(linkdto, linkDTO);
 
 	}
 

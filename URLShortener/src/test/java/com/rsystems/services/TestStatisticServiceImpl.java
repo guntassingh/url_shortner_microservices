@@ -1,14 +1,10 @@
 package com.rsystems.services;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.http.HttpHeaders;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
 import com.rsystems.dtos.StatisticsDTO;
 import com.rsystems.dtos.StatisticsSummaryDTO;
 import com.rsystems.entities.Statistic;
@@ -36,30 +31,8 @@ public class TestStatisticServiceImpl {
 		MockitoAnnotations.initMocks(this);
 	}
 
-	Url url = new Url("MmM3MT", "http://docker.com", "12345");
-
 	@Test
-	public void createTest() {
-		Statistic statistic = new Statistic("crome", "computer", "window 10", url);
-		Mockito.when(repository.save(statistic)).thenReturn(statistic);
-		Statistic Stat = statisticService.create(statistic);
-		assertEquals(Stat.getBrowser(), statistic.getBrowser());
-		assertNotNull(statistic);
-	}
-
-	@Test
-	public void getStatisticsSummaryTest() {
-		StatisticsSummaryDTO summaryDTO = new StatisticsSummaryDTO();
-		StatisticsDTO statisticsDTO = new StatisticsDTO();
-		statisticsDTO.setName("crome");
-		statisticsDTO.setTotal(new Long(10));
-		List<StatisticsDTO> browsers = new ArrayList<StatisticsDTO>();
-		browsers.add(statisticsDTO);
-
-	}
-
-	@Test
-	public void whenCreatingAStatisticVerifyThatRepositorySaveIsCalled() {
+	public void whenCreatingStatisticVerifyThatRepositorySaveIsCalled() {
 
 		Url url = new Url("MmM3MT", "http://docker.com", "12345");
 		Statistic statistic = new Statistic("Firefox 7", "Computer", "Windows XP", url);
@@ -68,18 +41,13 @@ public class TestStatisticServiceImpl {
 	}
 
 	@Test
-	public void whenMappingFromHeadersAndStatisticReturnsStatistic() {
-		// Given
-		Url url = new Url("MmM3MT", "http://www.docker.com", "12345");
+	public void whenMappingFromHeaderAndStatisticReturns() {
 
+		Url url = new Url("MmM3MT", "http://www.docker.com", "12345");
 		Map<String, String> headers = new HashMap<>();
 		headers.put(HttpHeaders.USER_AGENT.toLowerCase(),
 				"Mozilla/5.0 (Windows NT 5.1; rv:7.0.1) Gecko/20100101 Firefox/7.0.1");
-
-		// When
 		Statistic statistic = statisticService.mapFrom(headers, url);
-
-		// Then
 		assertEquals("Firefox 7", statistic.getBrowser());
 		assertEquals("Computer", statistic.getDeviceType());
 		assertEquals("Windows XP", statistic.getOperatingSystem());
@@ -87,7 +55,7 @@ public class TestStatisticServiceImpl {
 	}
 
 	@Test
-	public void whenGettingStatisticsSummaryReturnsResultsFromRepository() {
+	public void whenGettingStatisticSummaryReturnsResultsFromRepository() {
 		Long numberOfHits = 3L;
 
 		StatisticsDTO firefox = new StatisticsDTO("Firefox", 1L);
@@ -113,7 +81,7 @@ public class TestStatisticServiceImpl {
 	}
 
 	@Test
-	public void whenGettingStatisticsSummaryByCodeReturnsResultsFromRepository() {
+	public void whenGettingStatisticSummaryByCodeReturnsResultsFromRepository() {
 		String code = "MmM3MT";
 		Long numberOfHits = 3L;
 
